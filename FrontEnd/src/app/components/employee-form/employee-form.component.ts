@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BookService } from 'src/app/services/book.service';
+import { EmployeeService } from 'src/app/services/employee.service';
 
 @Component({
   selector: 'app-employee-form',
@@ -14,15 +14,15 @@ export class EmployeeFormComponent implements OnInit {
   employeeForm!: FormGroup; // Form group for handling book data
     isEdit = false; // Flag to check if the form is in edit mode
     bookId: number | null = null; // Holds the ID of the book when editing
-  
+
     constructor(
       private fb: FormBuilder, // FormBuilder for creating reactive forms
-      private bookService: BookService, // Service for API interactions
+      private employeeService: EmployeeService, // Service for API interactions
       private route: ActivatedRoute, // ActivatedRoute for getting route parameters
       private router: Router, // Router for navigation
       private snackBar: MatSnackBar // Snackbar for displaying notifications
     ) {}
-  
+
     ngOnInit(): void {
       // Initialize the form with default values and validators
       this.employeeForm = this.fb.group({
@@ -33,7 +33,7 @@ export class EmployeeFormComponent implements OnInit {
 
         ]
       });
-  
+
       // Check if the route has an 'id' parameter (for editing a book)
       this.route.paramMap.subscribe(params => {
         const id = params.get('id');
@@ -44,40 +44,40 @@ export class EmployeeFormComponent implements OnInit {
         }
       });
     }
-  
+
     // Load book data into the form for editing
     loadBook(id: number) {
-      this.bookService.getBook(id).subscribe(book => {
+      this.employeeService.getEmployee(id).subscribe(book => {
         this.employeeForm.patchValue(book); // Populate form fields with existing book data
       });
     }
-  
+
     // Handle form submission for adding or updating a book
     onSubmit() {
       if (this.employeeForm.invalid) {
         this.showSnackbar('Please fill in all required fields.', 'error');
         return;
       }
-  
+
       if (this.isEdit) {
         // Update existing book
-        this.bookService.updateBook(this.bookId!, this.employeeForm.value).subscribe(() => {
-          this.showSnackbar('Book updated successfully', 'success');
-          this.router.navigate(['/books']); // Navigate back to book list
+        this.employeeService.updateEmployee(this.bookId!, this.employeeForm.value).subscribe(() => {
+          this.showSnackbar('Employee updated successfully', 'success');
+          this.router.navigate(['/Employee']); // Navigate back to book list
         }, error => {
           this.showSnackbar('Error updating book: ' + error.message, 'error');
         });
       } else {
         // Add new book
-        this.bookService.addBook(this.employeeForm.value).subscribe(() => {
-          this.showSnackbar('Book added successfully', 'success');
-          this.router.navigate(['/books']); // Navigate back to book list
+        this.employeeService.addEmployee(this.employeeForm.value).subscribe(() => {
+          this.showSnackbar('Employee added successfully', 'success');
+          this.router.navigate(['/Employee']); // Navigate back to book list
         }, error => {
-          this.showSnackbar('Error adding book: ' + error.message, 'error');
+          this.showSnackbar('Error adding Employee: ' + error.message, 'error');
         });
       }
     }
-  
+
     // Display a snackbar message for notifications
     private showSnackbar(message: string, type: 'success' | 'error') {
       this.snackBar.open(message, 'Close', {

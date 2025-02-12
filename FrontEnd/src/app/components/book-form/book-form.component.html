@@ -1,0 +1,37 @@
+<div class="container">
+    <h2>{{ isEdit ? 'Edit' : 'Add' }} Book</h2>
+  
+    <form [formGroup]="bookForm" (ngSubmit)="onSubmit()">
+      <mat-form-field>
+        <input matInput placeholder="Title" formControlName="title" required />
+        <mat-error *ngIf="bookForm.get('title')?.invalid">Title is required.</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field>
+        <input matInput placeholder="Author" formControlName="author" required />
+        <mat-error *ngIf="bookForm.get('author')?.invalid">Author is required.</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          type="number"
+          placeholder="Year"
+          formControlName="year"
+          required
+        />
+        <mat-error *ngIf="bookForm.get('year')?.hasError('required')">
+          Year is required.
+        </mat-error>
+        <mat-error *ngIf="bookForm.get('year')?.hasError('min')">
+          Year must be at least 1900.
+        </mat-error>
+        <mat-error *ngIf="bookForm.get('year')?.hasError('max')">
+          Year cannot be greater than the current year.
+        </mat-error>
+      </mat-form-field>
+      
+      <button mat-raised-button color="primary" type="submit">{{ isEdit ? 'Update' : 'Add' }}</button>
+      <button mat-button color="warn" routerLink="/books">Cancel</button>
+    </form>
+  </div>
+  

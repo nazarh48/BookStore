@@ -1,0 +1,37 @@
+<div class="container">
+    <h2>{{ isEdit ? 'Edit' : 'Add' }} Employee</h2>
+  
+    <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+      <mat-form-field>
+        <input matInput placeholder="Employee Name" formControlName="employeeName" required />
+        <mat-error *ngIf="employeeForm.get('employeeName')?.invalid">Name is required.</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field>
+        <input matInput placeholder="Qualification" formControlName="qualification" required />
+        <mat-error *ngIf="employeeForm.get('qualification')?.invalid">Qualification is required.</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          type="number"
+          placeholder="Age"
+          formControlName="age"
+          required
+        />
+        <mat-error *ngIf="employeeForm.get('age')?.hasError('required')">
+          Age is required.
+        </mat-error>
+        
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="City" formControlName="city" required />
+        <mat-error *ngIf="employeeForm.get('city')?.invalid">City is required.</mat-error>
+      </mat-form-field>
+      
+      <button mat-raised-button color="primary" type="submit">{{ isEdit ? 'Update' : 'Add' }}</button>
+      <button mat-button color="warn" routerLink="/employee">Cancel</button>
+    </form>
+  </div>
+  

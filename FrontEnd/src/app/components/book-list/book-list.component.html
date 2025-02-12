@@ -1,0 +1,48 @@
+<div class="container">
+    <h2 style="display: flex; justify-content: center;">Books List</h2>
+  
+    <table mat-table [dataSource]="books" class="mat-elevation-z8" *ngIf="books.length > 0" style="width: 100%;">
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let book"> {{ book.id }} </td>
+      </ng-container>
+  
+      <!-- Title Column -->
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef> Title </th>
+        <td mat-cell *matCellDef="let book"> {{ book.title }} </td>
+      </ng-container>
+  
+      <!-- Author Column -->
+      <ng-container matColumnDef="author">
+        <th mat-header-cell *matHeaderCellDef> Author </th>
+        <td mat-cell *matCellDef="let book"> {{ book.author }} </td>
+      </ng-container>
+  
+      <!-- Year Column -->
+      <ng-container matColumnDef="year">
+        <th mat-header-cell *matHeaderCellDef> Year </th>
+        <td mat-cell *matCellDef="let book"> {{ book.year }} </td>
+      </ng-container>
+  
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let book">
+          <button mat-button color="primary" (click)="editBook(book.id)">Edit</button>
+          <button mat-button color="warn" (click)="deleteBook(book.id)">Delete</button>
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="['id', 'title', 'author', 'year', 'actions']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['id', 'title', 'author', 'year', 'actions'];"></tr>
+    </table>
+  
+    <!-- Show message when no records exist -->
+    <p *ngIf="books.length === 0" style="text-align: center; font-size: 18px; color: gray; margin-top: 20px;">
+      No books available.
+    </p>
+  
+  </div>
+  

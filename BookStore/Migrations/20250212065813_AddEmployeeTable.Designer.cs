@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookStore.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250209183402_Initial")]
-    partial class Initial
+    [Migration("20250212065813_AddEmployeeTable")]
+    partial class AddEmployeeTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,28 +24,32 @@ namespace BookStore.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("BookStore.Model.Book", b =>
+            modelBuilder.Entity("BookStore.Model.Employee", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("EmployeeNumber")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EmployeeNumber"));
 
-                    b.Property<string>("Author")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Year")
+                    b.Property<int>("Age")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("Books");
+                    b.Property<string>("EmployeeName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Qualification")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("EmployeeNumber");
+
+                    b.ToTable("Employee");
                 });
 #pragma warning restore 612, 618
         }
